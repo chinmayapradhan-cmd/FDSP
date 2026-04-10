@@ -1,0 +1,7 @@
+dbt_poc:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ./.duckdb/dbt_poc.duckdb
+      threads: 4

@@ -1,0 +1,38 @@
+version: 2
+
+seeds:
+  - name: raw_customers
+    description: "Dummy seed file for customer reference data."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['active', 'inactive']
+
+models:
+  - name: stg_customers
+    description: "Staging model that standardizes customer columns."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        tests:
+          - not_null
+
+  - name: dim_customers
+    description: "Dimensional model for active customers with region classification."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: region
+        tests:
+          - accepted_values:
+              values: ['APAC', 'WEST', 'OTHER']
