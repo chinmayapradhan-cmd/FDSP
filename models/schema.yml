@@ -1,3 +1,4 @@
+---
 version: 2
 
 seeds:
@@ -11,7 +12,8 @@ seeds:
       - name: status
         tests:
           - accepted_values:
-              values: ['active', 'inactive']
+              arguments:
+                values: ['active', 'inactive']
 
 models:
   - name: stg_customers
@@ -35,4 +37,5 @@ models:
       - name: region
         tests:
           - accepted_values:
-              values: ['APAC', 'WEST', 'OTHER']
+              arguments:
+                values: ['APAC', 'WEST', 'OTHER']
