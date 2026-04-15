@@ -1,0 +1,71 @@
+---
+name: CD Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+      - test
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Set environment
+        id: set-env
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "ENV=prod" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
+            echo "ENV=test" >> $GITHUB_OUTPUT
+          else
+            echo "ENV=dev" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Copy profiles
+        run: |
+          mkdir -p ~/.dbt
+          cp .github/profiles/profiles.yml ~/.dbt/profiles.yml
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: dbt seed
+        run: dbt seed --target ${{ steps.set-env.outputs.ENV }}
+
+      - name: dbt run
+        run: dbt run --target ${{ steps.set-env.outputs.ENV }}
+
+      - name: dbt test
+        run: dbt test --target ${{ steps.set-env.outputs.ENV }}
+
+      - name: Generate docs
+        run: dbt docs generate --target ${{ steps.set-env.outputs.ENV }}
+
+      - name: Upload docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbt-docs-${{ steps.set-env.outputs.ENV }}
+          path: target/
+          retention-days: 30
+
+      - name: Deployment summary
+        run: |
+          echo "✅ Deployed to ${{ steps.set-env.outputs.ENV }} environment"
+          echo "📦 Branch: ${{ github.ref_name }}"
+          echo "🔖 Commit: ${{ github.sha }}"
+          echo "👤 Author: ${{ github.actor }}"

@@ -1,0 +1,13 @@
+# Default owners
+* @your-org/data-platform
+
+# dbt models
+/models/ @your-org/analytics-engineering
+/seeds/ @your-org/analytics-engineering
+
+# workflows
+/.github/workflows/ @your-org/devops-team
+
+# docs/templates
+/.github/ @your-org/devops-team
+/README.md @your-org/devops-team
