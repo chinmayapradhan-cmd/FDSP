@@ -1,0 +1,39 @@
+---
+name: Promotion request
+description: Request promotion from dev to test or test to main
+title: ""
+labels: ["status:needs-review"]
+body:
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source branch
+      options:
+        - dev
+        - test
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target branch
+      options:
+        - test
+        - main
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Promotion Summary
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation Evidence
+    validations:
+      required: true

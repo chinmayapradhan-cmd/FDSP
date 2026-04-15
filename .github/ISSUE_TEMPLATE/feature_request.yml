@@ -1,0 +1,40 @@
+---
+name: Feature request
+description: Request a new dbt feature/model or CI/CD improvement
+title: ""
+labels: ["type:feature", "status:needs-review"]
+body:
+  - type: input
+    id: ticket
+    attributes:
+      label: Ticket / Request ID
+      placeholder: POC-001
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What needs to be built?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - models
+        - workflow
+        - docs
+        - governance
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+    validations:
+      required: true

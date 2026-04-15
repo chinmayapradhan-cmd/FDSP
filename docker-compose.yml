@@ -1,0 +1,29 @@
+---
+version: '3.8'
+
+services:
+  dbt-dev:
+    build: .
+    environment:
+      - DBT_TARGET=dev
+    volumes:
+      - .:/app
+      - ./target:/app/target
+    command: dbt run --target dev
+
+  dbt-test:
+    build: .
+    environment:
+      - DBT_TARGET=test
+    volumes:
+      - .:/app
+      - ./target:/app/target
+    command: dbt run --target test
+
+  dbt-docs:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    command: dbt docs serve --port 8080

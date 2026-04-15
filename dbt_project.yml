@@ -1,0 +1,29 @@
+---
+name: 'dbt_poc'
+version: '1.0.0'
+config-version: 2
+
+profile: 'dbt_poc'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - ".duckdb"
+
+models:
+  dbt_poc:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
+seeds:
+  dbt_poc:
+    +schema: main
