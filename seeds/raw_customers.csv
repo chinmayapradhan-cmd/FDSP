@@ -1,0 +1,6 @@
+customer_id,customer_name,country,status
+1,Alice,IN,active
+2,Bob,US,active
+3,Charlie,IN,inactive
+4,Diana,UK,active
+5,Eric,US,inactive
