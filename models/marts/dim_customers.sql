@@ -8,5 +8,5 @@ select
         when country in ('US', 'UK') then 'WEST'
         else 'OTHER'
     end as region
-from {{ ref('stg_customers') }}
+from stg_customers
 where status = 'active'
