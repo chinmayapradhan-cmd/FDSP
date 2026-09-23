@@ -5,7 +5,7 @@ select
     status,
     case
         when country = 'IN' then 'APAC'
-        when country in ('US', 'UK') then 'WEST'
+        when country in ('US', 'UK') then 'EAST'
         else 'OTHER'
     end as region
 from stg_customers
